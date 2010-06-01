@@ -1,0 +1,25 @@
+<?php
+// $Id: vff_sparql.test,v 1.1 2009/11/01 10:48:24 dereine Exp $
+/**
+ * @file
+ *   Test for twitter views query backend.
+ */
+
+class twitterViewsQueryPluginTest extends DrupalWebTestCase {
+  public static function getInfo() {
+    return array(
+      'name' => 'VFF SPARQL query plugin',
+      'desc' => 'Connects to http://lab.linkeddata.deri.ie/ppa/sparql.php.',
+      'group' => 'SPARQL',
+    );
+  }
+
+  function setUp() {
+    parent::setUp();
+  }
+
+  function testFoo() {
+    module_include('inc', 'twitter', 'vff_sparql_plugin_query_twitter');
+    $query = new vff_sparql_plugin_query_twitter;
+  }
+}

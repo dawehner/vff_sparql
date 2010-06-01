@@ -1,0 +1,6 @@
+;$Id$
+name = Virtual Film Factory (VFF) SPARQL
+description = 'Runs a query to the twitter api built by a views query plugin'
+dependencies[] = twitter
+dependencies[] = views
+core = 6.x
