@@ -9,7 +9,7 @@ class vff_sparql_plugin_query_sparql extends views_plugin_query {
   function init($base_table = 'sparql_ep', $base_field) {
     module_load_include('inc', 'twitter');
 
-    $this->api_url = variable_get('vff_sparql_api_url', 'http://lab.linkeddata.deri.ie/ppa/sparql.php');
+    $this->endpoint_url = variable_get('vff_sparql_endpoint_url', 'http://lab.linkeddata.deri.ie/ppa/sparql.php');
     $this->api_method = variable_get('vff_sparql_api_method', 'json');
   }
 
@@ -209,7 +209,7 @@ class vff_sparql_plugin_query_sparql extends views_plugin_query {
       //$query = str_replace(array_keys($replacements), $replacements, $query);
 
 
-      $url = $this->api_url .'?'. $query;
+      $url = $this->endpoint_url .'?'. $query;
 
       $start = views_microtime();
       
@@ -258,18 +258,20 @@ class vff_sparql_plugin_query_sparql extends views_plugin_query {
     //$view->query->add_field(NULL, "'" . $view->name . ':' . $view->current_display . "'", 'view_name');
   }
 
+  // This can only be displayed in the UI if the patch in
+  // http://drupal.org/node/621142 is applied.
   function option_definition() {
     $options = parent::option_definition();
-    $options['api_url'] = array('default' => 'http://search.twitter.com/search.json');
+    $options['endpoint_url'] = array('default' => 'http://search.twitter.com/search.json');
 
     return $options;
   }
 
   function options_form(&$form, &$form_state) {
-    $form['api_url'] = array(
+    $form['endpoint_url'] = array(
       '#type' => 'textfield',
-      '#title' => t('Alternate API URL'),
-      '#default_value' => $this->options['api_url'],
+      '#title' => t('SPARQL Endpoint'),
+      '#default_value' => $this->options['endpoint_url'],
       '#description' => t("A Twitter-compatible microblogging services like !identica can be used insted of Twitter.com by entering the service's API URL here.",
       array('!identica' => l('Identi.ca', 'http://laconi.ca/trac/wiki/TwitterCompatibleAPI'))),
     );
