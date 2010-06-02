@@ -158,12 +158,14 @@ function vff_sparql_views_handlers() {
  * Implementation of hook_views_plugins().
  */
 function vff_sparql_views_plugins() {
+  $path = drupal_get_path('module', 'vff_sparql') . '/plugins';
   return array(
     'query' => array(
       'sparql_query' => array(
         'title' => t('SPARQL Query'),
         'help' => t('Query will be generated and run against a SPARQL endpoint.'),
-        'handler' => 'vff_sparql_plugin_query_sparql'
+        'handler' => 'vff_sparql_plugin_query_sparql',
+        'path' => $path,
       ),
     ),
   );
