@@ -262,7 +262,7 @@ class vff_sparql_plugin_query_sparql extends views_plugin_query {
   // http://drupal.org/node/621142 is applied.
   function option_definition() {
     $options = parent::option_definition();
-    $options['endpoint_url'] = array('default' => 'http://search.twitter.com/search.json');
+    $options['endpoint_url'] = array('default' => 'http://lab.linkeddata.deri.ie/ppa/sparql.php');
 
     return $options;
   }
