@@ -29,7 +29,9 @@ class vff_sparql_plugin_query_sparql extends views_plugin_query {
         }
         $clauses[] = $clause;
       }
-
+      
+      // Unset the empty clause that is added (apparently by default).
+      unset($clauses[0]);
       if ($clauses) {
         if (count($clauses) > 1) {
           return implode(")" . $this->group_operator , $clauses);
@@ -61,14 +63,17 @@ class vff_sparql_plugin_query_sparql extends views_plugin_query {
     if (!empty($view->pager['items_per_page'])) {
       $params['rpp'] = $view->pager['items_per_page'] <= 100 ? $view->pager['items_per_page'] : 100;
     }
-    $params['q'] = $where;
+    $params['WHERE'] = $where;
 
     // Build the full string.
     $items = array();
     if ($params) {
       foreach ($params as $key => $value) {
         if ($key == 'q') {
-          array_unshift($items, 'q='. urlencode($value));
+          array_unshift($items, 'query='. urlencode($value));
+        }
+        else if ($key == 'WHERE') {
+          $items[] = $key .'{'. urlencode($value) .'}';
         }
         else {
           $items[] = $key .'='. urlencode($value);
@@ -202,7 +207,8 @@ class vff_sparql_plugin_query_sparql extends views_plugin_query {
     $query = $view->build_info['query'];
     global $user;
     profile_load_profile($user);
-    $query = 'query=PREFIX+rdf:+%3Chttp://www.w3.org/1999/02/22-rdf-syntax-ns%23%3E+%0D%0APREFIX+rdfs:+%3Chttp://www.w3.org/2000/01/rdf-schema%23%3E+%0D%0APREFIX+dcterms:+%3Chttp://purl.org/dc/terms/%3E+%0D%0APREFIX+foaf:+%3Chttp://xmlns.com/foaf/0.1/%3E+%0D%0APREFIX+mpp:+%3Chttp://imp.deri.ie/ontology/moviePostProcessing%23%3E+%0D%0A%0D%0ASELECT+*+%0D%0AFROM+NAMED+%3Chttp://imp.deri.ie/vff/ppa/projects%3E+%0D%0AFROM+NAMED+%3Chttp://imp.deri.ie/vff/ppa/people%3E+%0D%0AWHERE+{%0D%0A%0D%0A%3C' . urlencode($user->profile_uri) .'%3E+foaf:currentProject+%3Fproject+.%0D%0A%3Fproject+rdfs:label+%3Ftitle+.%0D%0A%3Fperson+rdf:type+mpp:Person+;%0D%0A++++++++++rdfs:label+%3FpersonName+;%0D%0A++++++++++foaf:currentProject+%3Fproject+.%0D%0A}&output=json&jsonp=&key=imp';
+    //$query = 'query=PREFIX+rdf:+%3Chttp://www.w3.org/1999/02/22-rdf-syntax-ns%23%3E+%0D%0APREFIX+rdfs:+%3Chttp://www.w3.org/2000/01/rdf-schema%23%3E+%0D%0APREFIX+dcterms:+%3Chttp://purl.org/dc/terms/%3E+%0D%0APREFIX+foaf:+%3Chttp://xmlns.com/foaf/0.1/%3E+%0D%0APREFIX+mpp:+%3Chttp://imp.deri.ie/ontology/moviePostProcessing%23%3E+%0D%0A%0D%0ASELECT+*+%0D%0AFROM+NAMED+%3Chttp://imp.deri.ie/vff/ppa/projects%3E+%0D%0AFROM+NAMED+%3Chttp://imp.deri.ie/vff/ppa/people%3E+%0D%0AWHERE+{%0D%0A%0D%0A%3C' . urlencode($user->profile_uri) .'%3E+foaf:currentProject+%3Fproject+.%0D%0A%3Fproject+rdfs:label+%3Ftitle+.%0D%0A%3Fperson+rdf:type+mpp:Person+;%0D%0A++++++++++rdfs:label+%3FpersonName+;%0D%0A++++++++++foaf:currentProject+%3Fproject+.%0D%0A}&output=json&jsonp=&key=imp';
+    $query = 'query=PREFIX+rdf:+%3Chttp://www.w3.org/1999/02/22-rdf-syntax-ns%23%3E+%0D%0APREFIX+rdfs:+%3Chttp://www.w3.org/2000/01/rdf-schema%23%3E+%0D%0APREFIX+dcterms:+%3Chttp://purl.org/dc/terms/%3E+%0D%0APREFIX+foaf:+%3Chttp://xmlns.com/foaf/0.1/%3E+%0D%0APREFIX+mpp:+%3Chttp://imp.deri.ie/ontology/moviePostProcessing%23%3E+%0D%0A%0D%0ASELECT+*+%0D%0AFROM+NAMED+%3Chttp://imp.deri.ie/vff/ppa/projects%3E+%0D%0AFROM+NAMED+%3Chttp://imp.deri.ie/vff/ppa/people%3E+%0D%0A' . $query . '&output=json&jsonp=&key=imp';
     
     if ($query) {
       //$replacements = module_invoke_all('views_query_substitutions', $view);

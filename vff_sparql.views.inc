@@ -14,6 +14,14 @@ function vff_sparql_views_data() {
     'query class' => 'sparql_query'
   );
 
+  $data['sparql_ep']['where'] = array(
+    'title' => t('Where clause'),
+    'help' => t('Add a triple pattern where clause.'),
+    'filter' => array(
+      'handler' => 'vff_sparql_handler_filter_where',
+    ),
+  );
+  
   // String
   $data['sparql_ep']['string'] = array(
     'title' => t('String'),
@@ -64,7 +72,7 @@ function vff_sparql_views_data() {
   );
 
 
-
+    
   $data['sparql_ep']['reference'] = array(
     'title' => t('Tweet reference'),
     'help' => t('Display the  referencing person  of the tweet'),
@@ -132,6 +140,10 @@ function vff_sparql_views_handlers() {
       ),
 
       // Filters
+      'vff_sparql_handler_filter_where' => array(
+        'parent' => 'vff_sparql_handler_filter'
+      ),
+      
       'vff_sparql_handler_filter' => array(
         'parent' => 'views_handler_filter'
       ),
