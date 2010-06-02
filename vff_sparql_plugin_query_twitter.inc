@@ -6,7 +6,7 @@ class vff_sparql_plugin_query_twitter extends views_plugin_query {
   /**
    * Constructor; Create the basic query object and fill with default values.
    */
-  function init($base_table = 'twitter_api', $base_field) {
+  function init($base_table = 'sparql_ep', $base_field) {
     module_load_include('inc', 'twitter');
 
     $this->api_url = variable_get('vff_sparql_api_url', 'http://lab.linkeddata.deri.ie/ppa/sparql.php');

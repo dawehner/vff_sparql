@@ -6,16 +6,16 @@
  */
 
 function vff_sparql_views_data() {
-  $data['twitter_api']['table']['group']  = t('Twitter_API');
+  $data['sparql_ep']['table']['group']  = t('SPARQL endpoint');
 
-  $data['twitter_api']['table']['base'] = array(
+  $data['sparql_ep']['table']['base'] = array(
     'title' => t('VFF'),
     'help' => t('Connects to http://lab.linkeddata.deri.ie/ppa/sparql.php to create Virtual Film Factory front end.'),
     'query class' => 'twitter_query'
   );
 
   // String
-  $data['twitter_api']['string'] = array(
+  $data['sparql_ep']['string'] = array(
     'title' => t('String'),
     'help' => t('Search for a string on twitter'),
     'field' => array(
@@ -26,7 +26,7 @@ function vff_sparql_views_data() {
     ),
   );
 
-  $data['twitter_api']['project_title'] = array(
+  $data['sparql_ep']['project_title'] = array(
     'title' => t('Project Title'),
     'help' => t('Display the text of a twitter message'),
     // Shouldn't there be vff_sparql_handler_field_markup??
@@ -35,7 +35,7 @@ function vff_sparql_views_data() {
     ),
   );
   
-  $data['twitter_api']['people'] = array(
+  $data['sparql_ep']['people'] = array(
     'title' => t('People on a project'),
     'help' => t('Display the text of a twitter message'),
     // Shouldn't there be vff_sparql_handler_field_markup??
@@ -44,7 +44,7 @@ function vff_sparql_views_data() {
     ),
   );
   
-  $data['twitter_api']['source'] = array(
+  $data['sparql_ep']['source'] = array(
     'title' => t('Source'),
     'help' => t('Display the source of a tweet'),
     'field' => array(
@@ -52,7 +52,7 @@ function vff_sparql_views_data() {
     ),
   );
 
-  $data['twitter_api']['from_user'] = array(
+  $data['sparql_ep']['from_user'] = array(
     'title' => t('Tweet Author'),
     'help' => t('Display the author of the tweet'),
     'field' => array(
@@ -65,7 +65,7 @@ function vff_sparql_views_data() {
 
 
 
-  $data['twitter_api']['reference'] = array(
+  $data['sparql_ep']['reference'] = array(
     'title' => t('Tweet reference'),
     'help' => t('Display the  referencing person  of the tweet'),
     'field' => array(
@@ -77,7 +77,7 @@ function vff_sparql_views_data() {
   );
 
 
-  $data['twitter_api']['hash'] = array(
+  $data['sparql_ep']['hash'] = array(
     'title' => t('Tweet hash'),
     'field' => array(
       'handler' => 'vff_sparql_handler_field_hash',
@@ -87,7 +87,7 @@ function vff_sparql_views_data() {
      ),
   );
 
-  $data['twitter_api']['attitude'] = array(
+  $data['sparql_ep']['attitude'] = array(
     'title' => t('Tweet attitude'),
     'help' => t('Did the tweet contained happieness, sadness or a question'),
     'filter' => array(
@@ -95,7 +95,7 @@ function vff_sparql_views_data() {
     ),
   );
 
-  $data['twitter_api']['locale'] = array(
+  $data['sparql_ep']['locale'] = array(
     'title' => t('Tweet locale'),
     'filter' => array(
       'handler' => 'vff_sparql_handler_filter_locale',
