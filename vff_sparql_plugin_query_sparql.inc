@@ -1,7 +1,7 @@
 <?php
 // $Id: vff_sparql_plugin_query_twitter.inc,v 1.5.2.3 2010/05/21 14:39:44 dereine Exp $
 
-class vff_sparql_plugin_query_twitter extends views_plugin_query {
+class vff_sparql_plugin_query_sparql extends views_plugin_query {
 
   /**
    * Constructor; Create the basic query object and fill with default values.

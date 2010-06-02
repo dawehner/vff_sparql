@@ -11,7 +11,7 @@ function vff_sparql_views_data() {
   $data['sparql_ep']['table']['base'] = array(
     'title' => t('VFF'),
     'help' => t('Connects to http://lab.linkeddata.deri.ie/ppa/sparql.php to create Virtual Film Factory front end.'),
-    'query class' => 'twitter_query'
+    'query class' => 'sparql_query'
   );
 
   // String
@@ -160,10 +160,10 @@ function vff_sparql_views_handlers() {
 function vff_sparql_views_plugins() {
   return array(
     'query' => array(
-      'twitter_query' => array(
-        'title' => t('Twitter Query'),
-        'help' => t('Query will be generated and run using Twitter API.'),
-        'handler' => 'vff_sparql_plugin_query_twitter'
+      'sparql_query' => array(
+        'title' => t('SPARQL Query'),
+        'help' => t('Query will be generated and run against a SPARQL endpoint.'),
+        'handler' => 'vff_sparql_plugin_query_sparql'
       ),
     ),
   );
