@@ -1,5 +1,5 @@
 <?php
-// $Id: vff_sparql_plugin_query_twitter.inc,v 1.5.2.3 2010/05/21 14:39:44 dereine Exp $
+// $Id$
 
 class vff_sparql_plugin_query_sparql extends views_plugin_query {
 
@@ -7,8 +7,6 @@ class vff_sparql_plugin_query_sparql extends views_plugin_query {
    * Constructor; Create the basic query object and fill with default values.
    */
   function init($base_table = 'sparql_ep', $base_field) {
-    module_load_include('inc', 'twitter');
-
     $this->endpoint_url = variable_get('vff_sparql_endpoint_url', 'http://lab.linkeddata.deri.ie/ppa/sparql.php');
     $this->api_method = variable_get('vff_sparql_api_method', 'json');
   }
@@ -207,13 +205,12 @@ class vff_sparql_plugin_query_sparql extends views_plugin_query {
     $query = $view->build_info['query'];
     global $user;
     profile_load_profile($user);
-    //$query = 'query=PREFIX+rdf:+%3Chttp://www.w3.org/1999/02/22-rdf-syntax-ns%23%3E+%0D%0APREFIX+rdfs:+%3Chttp://www.w3.org/2000/01/rdf-schema%23%3E+%0D%0APREFIX+dcterms:+%3Chttp://purl.org/dc/terms/%3E+%0D%0APREFIX+foaf:+%3Chttp://xmlns.com/foaf/0.1/%3E+%0D%0APREFIX+mpp:+%3Chttp://imp.deri.ie/ontology/moviePostProcessing%23%3E+%0D%0A%0D%0ASELECT+*+%0D%0AFROM+NAMED+%3Chttp://imp.deri.ie/vff/ppa/projects%3E+%0D%0AFROM+NAMED+%3Chttp://imp.deri.ie/vff/ppa/people%3E+%0D%0AWHERE+{%0D%0A%0D%0A%3C' . urlencode($user->profile_uri) .'%3E+foaf:currentProject+%3Fproject+.%0D%0A%3Fproject+rdfs:label+%3Ftitle+.%0D%0A%3Fperson+rdf:type+mpp:Person+;%0D%0A++++++++++rdfs:label+%3FpersonName+;%0D%0A++++++++++foaf:currentProject+%3Fproject+.%0D%0A}&output=json&jsonp=&key=imp';
-    $query = 'query=PREFIX+rdf:+%3Chttp://www.w3.org/1999/02/22-rdf-syntax-ns%23%3E+%0D%0APREFIX+rdfs:+%3Chttp://www.w3.org/2000/01/rdf-schema%23%3E+%0D%0APREFIX+dcterms:+%3Chttp://purl.org/dc/terms/%3E+%0D%0APREFIX+foaf:+%3Chttp://xmlns.com/foaf/0.1/%3E+%0D%0APREFIX+mpp:+%3Chttp://imp.deri.ie/ontology/moviePostProcessing%23%3E+%0D%0A%0D%0ASELECT+*+%0D%0AFROM+NAMED+%3Chttp://imp.deri.ie/vff/ppa/projects%3E+%0D%0AFROM+NAMED+%3Chttp://imp.deri.ie/vff/ppa/people%3E+%0D%0A' . $query . '&output=json&jsonp=&key=imp';
     
     if ($query) {
-      //$replacements = module_invoke_all('views_query_substitutions', $view);
-      //$query = str_replace(array_keys($replacements), $replacements, $query);
-
+      $replacements = module_invoke_all('views_query_substitutions', $view);
+      $query = str_replace(array_keys($replacements), $replacements, $query);
+    //$query = 'query=PREFIX+rdf:+%3Chttp://www.w3.org/1999/02/22-rdf-syntax-ns%23%3E+%0D%0APREFIX+rdfs:+%3Chttp://www.w3.org/2000/01/rdf-schema%23%3E+%0D%0APREFIX+dcterms:+%3Chttp://purl.org/dc/terms/%3E+%0D%0APREFIX+foaf:+%3Chttp://xmlns.com/foaf/0.1/%3E+%0D%0APREFIX+mpp:+%3Chttp://imp.deri.ie/ontology/moviePostProcessing%23%3E+%0D%0A%0D%0ASELECT+*+%0D%0AFROM+NAMED+%3Chttp://imp.deri.ie/vff/ppa/projects%3E+%0D%0AFROM+NAMED+%3Chttp://imp.deri.ie/vff/ppa/people%3E+%0D%0AWHERE+{%0D%0A%0D%0A%3C' . urlencode($user->profile_uri) .'%3E+foaf:currentProject+%3Fproject+.%0D%0A%3Fproject+rdfs:label+%3Ftitle+.%0D%0A%3Fperson+rdf:type+mpp:Person+;%0D%0A++++++++++rdfs:label+%3FpersonName+;%0D%0A++++++++++foaf:currentProject+%3Fproject+.%0D%0A}&output=json&jsonp=&key=imp';
+    $query = 'query=PREFIX+rdf:+%3Chttp://www.w3.org/1999/02/22-rdf-syntax-ns%23%3E+%0D%0APREFIX+rdfs:+%3Chttp://www.w3.org/2000/01/rdf-schema%23%3E+%0D%0APREFIX+dcterms:+%3Chttp://purl.org/dc/terms/%3E+%0D%0APREFIX+foaf:+%3Chttp://xmlns.com/foaf/0.1/%3E+%0D%0APREFIX+mpp:+%3Chttp://imp.deri.ie/ontology/moviePostProcessing%23%3E+%0D%0A%0D%0ASELECT+*+%0D%0AFROM+NAMED+%3Chttp://imp.deri.ie/vff/ppa/projects%3E+%0D%0AFROM+NAMED+%3Chttp://imp.deri.ie/vff/ppa/people%3E+%0D%0A' . $query . '&output=json&jsonp=&key=imp';
 
       $url = $this->endpoint_url .'?'. $query;
 
@@ -222,9 +219,9 @@ class vff_sparql_plugin_query_sparql extends views_plugin_query {
       $headers = array('Accept' => 'application/json');
 
       $results = drupal_http_request($url, $headers, 'GET');
-      if (_twitter_request_failure($results)) {
+      /*if (_twitter_request_failure($results)) {
         return FALSE;
-      }
+      }*/
 
       switch ($this->api_method) {
         case 'atom':
