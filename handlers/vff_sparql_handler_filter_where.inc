@@ -155,6 +155,9 @@ class vff_sparql_handler_filter_where extends vff_sparql_handler_filter {
       '#default_value' => $this->predicate,
     );
   }
+  
+  function options_submit(&$form, &$form_state) {
+  }
 
   function operator_values($values = 1) {
     $options = array();
@@ -234,8 +237,8 @@ class vff_sparql_handler_filter_where extends vff_sparql_handler_filter {
   }
   
   function query() {
-    //$this->query->add_where('where', "WHERE+\{" . $this->value['subject'] . "\}");
-    $this->query->add_where('where', "\{?project rdfs:label ?title\}");
+    $this->query->add_where('where', "\{" . $this->value['subject'] . ' ' . $this->value['predicate'] . ' ' . $this->value['object'] . "\}");
+    //$this->query->add_where('where', "\{?project rdfs:label ?title\}");
   }
 
 }
