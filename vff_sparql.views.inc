@@ -129,13 +129,6 @@ function vff_sparql_views_handlers() {
       'vff_sparql_handler_filter_string' => array(
         'parent' => 'vff_sparql_handler_filter'
       ),
-
-      'vff_sparql_handler_filter_hash' => array(
-        'parent' => 'vff_sparql_handler_filter'
-      ),
-      'vff_sparql_handler_filter_attitude' => array(
-        'parent' => 'vff_sparql_handler_filter'
-      ),
     ),
   );
 }
