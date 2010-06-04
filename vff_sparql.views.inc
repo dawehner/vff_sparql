@@ -39,46 +39,6 @@ function vff_sparql_views_data() {
       'handler' => 'vff_sparql_handler_field_link',
     ),
   );
-  
-  $data['sparql_ep']['source'] = array(
-    'title' => t('Source'),
-    'help' => t('Display the source of a tweet'),
-    'field' => array(
-      'handler' => 'vff_sparql_handler_field_source',
-    ),
-  );
-
-
-    
-  $data['sparql_ep']['reference'] = array(
-    'title' => t('Tweet reference'),
-    'help' => t('Display the  referencing person  of the tweet'),
-    'field' => array(
-      'handler' => 'vff_sparql_handler_field_reference',
-     ),
-     'filter' => array(
-      'handler' => 'vff_sparql_handler_filter_reference',
-     ),
-  );
-
-
-  $data['sparql_ep']['hash'] = array(
-    'title' => t('Tweet hash'),
-    'field' => array(
-      'handler' => 'vff_sparql_handler_field_hash',
-     ),
-     'filter' => array(
-      'handler' => 'vff_sparql_handler_filter_hash',
-     ),
-  );
-
-  $data['sparql_ep']['attitude'] = array(
-    'title' => t('Tweet attitude'),
-    'help' => t('Did the tweet contained happieness, sadness or a question'),
-    'filter' => array(
-      'handler' => 'vff_sparql_handler_filter_attitude',
-    ),
-  );
 
   return $data;
 }
