@@ -1,5 +1,5 @@
 <?php
-// $Id: vff_sparql_handler_field.inc,v 1.1 2009/11/01 10:48:24 dereine Exp $
+// $Id$
 
 class vff_sparql_handler_field extends views_handler_field {
 

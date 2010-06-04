@@ -1,8 +1,8 @@
 <?php
-// $Id: vff_sparql.views.inc,v 1.3 2009/11/01 11:47:23 dereine Exp $
+// $Id$
 
 /**
- * Twitter API views search.
+ * SPARQL Views.
  */
 
 function vff_sparql_views_data() {
