@@ -92,13 +92,6 @@ function vff_sparql_views_data() {
     ),
   );
 
-  $data['sparql_ep']['locale'] = array(
-    'title' => t('Tweet locale'),
-    'filter' => array(
-      'handler' => 'vff_sparql_handler_filter_locale',
-    ),
-  );
-
   return $data;
 }
 
@@ -141,9 +134,6 @@ function vff_sparql_views_handlers() {
         'parent' => 'vff_sparql_handler_filter'
       ),
       'vff_sparql_handler_filter_attitude' => array(
-        'parent' => 'vff_sparql_handler_filter'
-      ),
-      'vff_sparql_handler_filter_locale' => array(
         'parent' => 'vff_sparql_handler_filter'
       ),
     ),
