@@ -21,18 +21,6 @@ function vff_sparql_views_data() {
       'handler' => 'vff_sparql_handler_filter_where',
     ),
   );
-  
-  // String
-  $data['sparql_ep']['string'] = array(
-    'title' => t('String'),
-    'help' => t('Search for a string on twitter'),
-    'field' => array(
-      'handler' => 'vff_sparql_handler_field',
-    ),
-    'filter' => array(
-      'handler' => 'vff_sparql_handler_filter_string',
-    ),
-  );
 
   $data['sparql_ep']['project_title'] = array(
     'title' => t('Project Title'),
@@ -108,9 +96,6 @@ function vff_sparql_views_handlers() {
       'vff_sparql_handler_field' => array(
         'parent' => 'views_handler_field'
       ),
-      'vff_sparql_handler_field_source' => array(
-        'parent' => 'vff_sparql_handler_field',
-      ),
       'vff_sparql_handler_field_link' => array(
         'parent' => 'vff_sparql_handler_field',
       ),
@@ -125,9 +110,6 @@ function vff_sparql_views_handlers() {
       
       'vff_sparql_handler_filter' => array(
         'parent' => 'views_handler_filter'
-      ),
-      'vff_sparql_handler_filter_string' => array(
-        'parent' => 'vff_sparql_handler_filter'
       ),
     ),
   );
