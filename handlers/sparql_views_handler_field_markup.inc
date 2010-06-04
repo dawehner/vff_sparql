@@ -1,6 +1,6 @@
 <?php
-// $Id$
-class vff_sparql_handler_field_link extends vff_sparql_handler_field {
+// $Id: sparql_views_handler_field_markup.inc,v 1.1 2009/11/01 10:48:24 dereine Exp $
+class sparql_views_handler_field_markup extends sparql_views_handler_field {
   /**
    * Constructor; calls to base object constructor.
    */
@@ -17,16 +17,17 @@ class vff_sparql_handler_field_link extends vff_sparql_handler_field {
 
   function render($values) {
     $output = '';
-    $links = array();
-    $field_values = $values->{$this->field_alias};
-    foreach ($field_values as $value) {
-      foreach ($value as $uri => $label) {
-        $links[] = array('href'=>$uri, 'title'=>$label);
+    $value = $values->{$this->field_alias};
+    if (is_array($value)) {
+      foreach ($value as $item) {
+        $output .= $item . ', ';
       }
     }
-    $output = theme('links', $links, array('class' => 'links'));
-
-    return $output;
+    else {
+      $output = $value;
+    }
+    $format = is_numeric($this->format) ? $this->format : $values->{$this->aliases['format']};
+    return check_markup($output, $format, FALSE);
   }
 
   function element_type() {

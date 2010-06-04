@@ -1,15 +1,26 @@
 <?php
+// $Id$
 
-class vff_sparql_handler_filter_where extends vff_sparql_handler_filter {
+class sparql_views_handler_filter extends views_handler_filter {
+  /**
+   * Add this filter to the query.
+   *
+   * Due to the nature of fapi, the value and the operator have an unintended
+   * level of indirection. You will find them in $this->operator
+   * and $this->value respectively.
+   */
+  function query() {
+//     $this->ensure_my_table();
+    $this->query->add_where($this->options['group'], "$this->value");
+  }
 
   // exposed filter options
   var $no_single = TRUE;
 
   function option_definition() {
     $options = parent::option_definition();
-    
+
     $options['case'] = array('default' => TRUE);
-    $options['predicate'] = array('default' => '=');
 
     return $options;
   }
@@ -135,7 +146,7 @@ class vff_sparql_handler_filter_where extends vff_sparql_handler_filter {
     $options = $this->operator_options('short');
     $output = check_plain($options[$this->operator]);
     if (in_array($this->operator, $this->operator_values(1))) {
-      $output .= ' ' . check_plain($this->value['subject'] . ' ' . $this->value['predicate'] . ' ' . $this->value['object']);
+      $output .= ' ' . check_plain($this->value);
     }
     return $output;
   }
@@ -148,15 +159,6 @@ class vff_sparql_handler_filter_where extends vff_sparql_handler_filter {
       '#default_value' => $this->options['case'],
       '#description' => t('Case sensitive filters may be faster. MySQL might ignore case sensitivity.'),
     );
-    $form['predicate'] = array(
-      '#type' => 'textfield',
-      '#title' => t('Predicate'),
-      '#size' => 30,
-      '#default_value' => $this->predicate,
-    );
-  }
-  
-  function options_submit(&$form, &$form_state) {
   }
 
   function operator_values($values = 1) {
@@ -196,24 +198,10 @@ class vff_sparql_handler_filter_where extends vff_sparql_handler_filter {
 
     if ($which == 'all' || $which == 'value') {
       $form['value'] = array(
-        'subject' => array(
-          '#type' => 'textfield',
-          '#title' => t('Subject'),
-          '#size' => 30,
-          '#default_value' => $this->value['subject'],
-        ),
-        'predicate' => array(
-          '#type' => 'textfield',
-          '#title' => t('Predicate'),
-          '#size' => 30,
-          '#default_value' => $this->value['predicate'],
-        ),
-        'object' => array(
-          '#type' => 'textfield',
-          '#title' => t('Predicate'),
-          '#size' => 30,
-          '#default_value' => $this->value['object'],
-        ),
+        '#type' => 'textfield',
+        '#title' => t('Value'),
+        '#size' => 30,
+        '#default_value' => $this->value,
       );
       if (!empty($form_state['exposed']) && !isset($form_state['input'][$identifier])) {
         $form_state['input'][$identifier] = $this->value;
@@ -235,14 +223,4 @@ class vff_sparql_handler_filter_where extends vff_sparql_handler_filter {
       );
     }
   }
-  
-  function query() {
-    if (isset($this->query->where['where'])) {
-      $this->query->add_where('where', '.' . $this->value['subject'] . ' ' . $this->value['predicate'] . ' ' . $this->value['object']);
-    }
-    else {
-      $this->query->add_where('where', $this->value['subject'] . ' ' . $this->value['predicate'] . ' ' . $this->value['object']);
-    }
-  }
-
 }

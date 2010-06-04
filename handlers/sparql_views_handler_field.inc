@@ -1,7 +1,7 @@
 <?php
 // $Id$
 
-class vff_sparql_handler_field extends views_handler_field {
+class sparql_views_handler_field extends views_handler_field {
 
   /**
    * Called to add the field to a query.

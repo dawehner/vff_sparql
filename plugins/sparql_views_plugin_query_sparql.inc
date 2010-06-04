@@ -1,17 +1,16 @@
 <?php
 // $Id$
 
-class vff_sparql_plugin_query_sparql extends views_plugin_query {
+class sparql_views_plugin_query_sparql extends views_plugin_query {
 
   /**
    * Constructor; Create the basic query object and fill with default values.
    */
-  function init($base_table = 'sparql_ep', $base_field) {
-    
+  function init($base_table = 'sparql_ep', $base_field, $query_options) {
     // @todo Add JS for hiding irrelvant field items.
     
-    $this->endpoint_url = variable_get('vff_sparql_endpoint_url', 'http://lab.linkeddata.deri.ie/ppa/sparql.php');
-    $this->api_method = variable_get('vff_sparql_api_method', 'json');
+    $this->endpoint_url = $query_options['endpoint_url'];
+    $this->api_method = variable_get('sparql_views_api_method', 'json');
   }
 
   /**
@@ -178,8 +177,8 @@ class vff_sparql_plugin_query_sparql extends views_plugin_query {
    * Let modules modify the query just prior to finalizing it.
    */
   function alter(&$view) {
-    foreach (module_implements('vff_sparql_query_alter') as $module) {
-      $function = $module . '_vff_sparql_query_alter';
+    foreach (module_implements('sparql_views_query_alter') as $module) {
+      $function = $module . '_sparql_views_query_alter';
       $function($view, $this);
     }
   }
@@ -273,14 +272,20 @@ class vff_sparql_plugin_query_sparql extends views_plugin_query {
 
     return $options;
   }
+  
+  function admin_summary() {
+    dpm($this);
+    if (!empty($this->options['exposed'])) {
+    }
+  }
 
   function options_form(&$form, &$form_state) {
     $form['endpoint_url'] = array(
       '#type' => 'textfield',
       '#title' => t('SPARQL Endpoint'),
-      '#default_value' => $this->options['endpoint_url'],
-      '#description' => t("A Twitter-compatible microblogging services like !identica can be used insted of Twitter.com by entering the service's API URL here.",
-      array('!identica' => l('Identi.ca', 'http://laconi.ca/trac/wiki/TwitterCompatibleAPI'))),
+      '#default_value' => $this->endpoint_url,
+      '#description' => t("The SPARQL endpoint that you want to access. For instance, !dbpedia.",
+      array('!dbpedia' => l('http://dbpedia.org/sparql', 'http://dbpedia.org/sparql'))),
     );
   }
 
