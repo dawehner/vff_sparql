@@ -237,8 +237,12 @@ class vff_sparql_handler_filter_where extends vff_sparql_handler_filter {
   }
   
   function query() {
-    $this->query->add_where('where', "\{" . $this->value['subject'] . ' ' . $this->value['predicate'] . ' ' . $this->value['object'] . "\}");
-    //$this->query->add_where('where', "\{?project rdfs:label ?title\}");
+    if (isset($this->query->where['where'])) {
+      $this->query->add_where('where', '.' . $this->value['subject'] . ' ' . $this->value['predicate'] . ' ' . $this->value['object']);
+    }
+    else {
+      $this->query->add_where('where', $this->value['subject'] . ' ' . $this->value['predicate'] . ' ' . $this->value['object']);
+    }
   }
 
 }

@@ -7,6 +7,9 @@ class vff_sparql_plugin_query_sparql extends views_plugin_query {
    * Constructor; Create the basic query object and fill with default values.
    */
   function init($base_table = 'sparql_ep', $base_field) {
+    
+    // @todo Add JS for hiding irrelvant field items.
+    
     $this->endpoint_url = variable_get('vff_sparql_endpoint_url', 'http://lab.linkeddata.deri.ie/ppa/sparql.php');
     $this->api_method = variable_get('vff_sparql_api_method', 'json');
   }
@@ -71,7 +74,8 @@ class vff_sparql_plugin_query_sparql extends views_plugin_query {
           array_unshift($items, 'query='. urlencode($value));
         }
         else if ($key == 'WHERE') {
-          $items[] = $key .'{'. urlencode($value) .'}';
+          $where_condition = "\{". $value ."\}";
+          $items[] = $key . urlencode($where_condition);
         }
         else {
           $items[] = $key .'='. urlencode($value);
