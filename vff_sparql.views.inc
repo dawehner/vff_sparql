@@ -60,17 +60,6 @@ function vff_sparql_views_data() {
     ),
   );
 
-  $data['sparql_ep']['from_user'] = array(
-    'title' => t('Tweet Author'),
-    'help' => t('Display the author of the tweet'),
-    'field' => array(
-      'handler' => 'vff_sparql_handler_field_from_user',
-     ),
-     'filter' => array(
-      'handler' => 'vff_sparql_handler_filter_from_user',
-     ),
-  );
-
 
     
   $data['sparql_ep']['reference'] = array(
@@ -135,9 +124,6 @@ function vff_sparql_views_handlers() {
       'vff_sparql_handler_field_markup' => array(
         'parent' => 'vff_sparql_handler_field',
       ),
-      'vff_sparql_handler_field_from_user' => array(
-        'parent' => 'vff_sparql_handler_field'
-      ),
 
       // Filters
       'vff_sparql_handler_filter_where' => array(
@@ -150,9 +136,7 @@ function vff_sparql_views_handlers() {
       'vff_sparql_handler_filter_string' => array(
         'parent' => 'vff_sparql_handler_filter'
       ),
-      'vff_sparql_handler_filter_from_user' => array(
-        'parent' => 'vff_sparql_handler_filter'
-      ),
+
       'vff_sparql_handler_filter_hash' => array(
         'parent' => 'vff_sparql_handler_filter'
       ),
